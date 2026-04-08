@@ -63,18 +63,19 @@ public class ConfigValidator
 		return this;
 	}
 
-	public ConfigValidator RequireSection(string sectionKey, Action<ConfigValidator> sectionValidations)
+	public ConfigValidator RequireSection(string sectionKey, Action<ConfigValidator>? sectionValidations = null)
 	{
 		IConfigurationSection section = this._Configuration.GetSection(sectionKey);
 		if (!section.Exists())
 		{
 			_Errors.Add($"Configuration section '{sectionKey}' is missing.");
 		}
-
-		ConfigValidator sectionValidator = new ConfigValidator(section, this._Logger);
-		sectionValidations(sectionValidator);
-		this._Errors.AddRange(sectionValidator._Errors.Select(e => $"In section '{sectionKey}': {e}."));
-
+		if (sectionValidations is not null)
+		{
+			ConfigValidator sectionValidator = new ConfigValidator(section, this._Logger);
+			sectionValidations(sectionValidator);
+			this._Errors.AddRange(sectionValidator._Errors.Select(e => $"In section '{sectionKey}': {e}."));
+		}
 		return this;
 	}
 
