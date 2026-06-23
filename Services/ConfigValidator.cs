@@ -3,15 +3,6 @@ using Microsoft.Extensions.Logging;
 
 namespace Shared.Services;
 
-/*
- * To do:
- * - Make sure config validator works fine DONE
- * - Change the way the secret key is stored in developement and in production
- * - Write a doc to tell the IT department how to set up configuration settings
- * - Check other requirements to deploy the API in production, like HTTPS, reverse proxy, etc.
- */
-
-
 public class ConfigValidator
 {
 	private readonly IConfiguration _Configuration;
